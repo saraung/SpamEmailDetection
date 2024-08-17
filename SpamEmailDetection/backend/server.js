@@ -38,7 +38,7 @@ app.post('/predict', (req, res) => {
 
     pythonProcess.stderr.on('data', (data) => {
         console.error(`stderr: ${data}`);
-        return res.status(500).send("Error during prediction");
+        return  res.status(500).send(`Error during prediction: ${data.toString()}`);
     });
 
     pythonProcess.on('close', (code) => {
