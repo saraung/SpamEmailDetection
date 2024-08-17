@@ -9,22 +9,19 @@ const port = 5000;
 const allowedOrigins = [
     "https://spam-email-detection-clientside.vercel.app",
     "http://localhost:3000" // for local development
-  ];
+];
 
-  app.use(cors({
+app.use(cors({
     origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true
-  }));
-
+}));
 
 app.use(express.json());
 
-
-app.get("/",(req,res)=>{
-    res.json("hello ")
-})
-
+app.get("/", (req, res) => {
+    res.json("hello ");
+});
 
 app.post('/predict', (req, res) => {
     const { message } = req.body;
@@ -33,25 +30,32 @@ app.post('/predict', (req, res) => {
         return res.status(400).send("Can't Predict Empty Field");
     }
 
+    console.log(`Received message: ${message}`);
+
     const pythonProcess = spawn('python', [path.join(__dirname, 'predict.py'), message]);
 
     pythonProcess.stdout.on('data', (data) => {
+        console.log(`Python stdout: ${data.toString()}`);
         return res.json({ prediction: data.toString() });
     });
 
     pythonProcess.stderr.on('data', (data) => {
-        console.error(`stderr: ${data}`);
-        return  res.status(500).send(`Error during prediction: ${data.toString()}`);
+        console.error(`Python stderr: ${data.toString()}`);
+        return res.status(500).send(`Error during prediction: ${data.toString()}`);
     });
 
     pythonProcess.on('close', (code) => {
-        console.log(`child process exited with code ${code}`);
+        console.log(`Python process exited with code ${code}`);
+        if (code !== 0) {
+            return res.status(500).send("Error during prediction");
+        }
     });
 });
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
+
 
 
 
