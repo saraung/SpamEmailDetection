@@ -15,7 +15,7 @@ const Spamui = () => {
       setLoading(true); 
    
       try {
-        const res = await axios.post('http://localhost:5000/predict', { message });
+        const res = await axios.post('http://spam-email-detection-api.vercel.app/predict', { message });
    
         if (res.status === 200) {
           console.log(res);
