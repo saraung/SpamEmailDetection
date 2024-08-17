@@ -6,13 +6,10 @@ const path = require('path');
 const app = express();
 const port = 5000;
 
-const allowedOrigins = [
-    "https://spam-email-detection-clientside.vercel.app",
-    "http://localhost:3000" // for local development
-  ];
+
 
   app.use(cors({
-    origin: allowedOrigins,
+    origin: ["https://spam-email-detection-clientside.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true
   }));
