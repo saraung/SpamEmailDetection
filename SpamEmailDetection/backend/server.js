@@ -6,8 +6,22 @@ const path = require('path');
 const app = express();
 const port = 5000;
 
-app.use(cors());
+const frontendUrl = "https://your-project-name.vercel.app";
+
+app.use(cors({
+    origin: ["http://localhost:3000",frontendUrl],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true
+}));
+
+
 app.use(express.json());
+
+
+app.get("/",(req,res)=>{
+    res.json("hello ")
+})
+
 
 app.post('/predict', (req, res) => {
     const { message } = req.body;
