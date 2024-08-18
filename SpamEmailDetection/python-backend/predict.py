@@ -3,7 +3,7 @@ from flask_cors import CORS
 import joblib
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins
+CORS(app, resources={r"/api/*": {"origins": "*"}})  # Allow all origins for endpoints starting with /api
 
 # Paths to the pickle files
 MODEL_PATH = 'spam_detector_model.pkl'
