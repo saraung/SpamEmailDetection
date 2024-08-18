@@ -1,15 +1,19 @@
-import sys
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import joblib
+
+app = Flask(__name__)
+CORS(app)
 
 # Paths to the pickle files (ensure these are correct when deploying)
 MODEL_PATH = 'spam_detector_model.pkl'
 VECTORIZER_PATH = 'vectorizer.pkl'
 
-def predict_spam_or_ham(message):
-    # Load the saved model and vectorizer
-    model = joblib.load(MODEL_PATH)
-    vectorizer = joblib.load(VECTORIZER_PATH)
+# Load the model and vectorizer at startup
+model = joblib.load(MODEL_PATH)
+vectorizer = joblib.load(VECTORIZER_PATH)
 
+def predict_spam_or_ham(message):
     # Transform the message using the vectorizer
     message_vectorized = vectorizer.transform([message])
 
@@ -19,15 +23,20 @@ def predict_spam_or_ham(message):
     # Return the predicted label
     return prediction[0]
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python predict.py <message>")
-        sys.exit(1)
+@app.route('/api/predict', methods=['POST'])
+def predict():
+    data = request.get_json()
 
-    message = sys.argv[1]
+    if 'message' not in data:
+        return jsonify({"error": "No message provided"}), 400
+
+    message = data['message']
 
     # Perform prediction
     predicted_label = predict_spam_or_ham(message)
 
-    # Print the predicted label
-    print(predicted_label)
+    # Return the prediction
+    return jsonify({"prediction": predicted_label})
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
