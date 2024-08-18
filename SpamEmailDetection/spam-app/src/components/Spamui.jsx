@@ -15,7 +15,7 @@ const Spamui = () => {
       setLoading(true); 
    
       try {
-        const res = await axios.post("https://spam-email-detection-python-api.onrender.com/api/predict", { message });
+        const res = await axios.post("https://spamemaildetection-python-api.onrender.com/api/predict", { message });
 
    
         if (res.status === 200) {
