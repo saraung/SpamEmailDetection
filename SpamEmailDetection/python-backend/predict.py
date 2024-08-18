@@ -1,7 +1,7 @@
-import joblib
 import sys
+import joblib
 
-# Paths to the pickle files
+# Paths to the pickle files (ensure these are correct when deploying)
 MODEL_PATH = 'spam_detector_model.pkl'
 VECTORIZER_PATH = 'vectorizer.pkl'
 
