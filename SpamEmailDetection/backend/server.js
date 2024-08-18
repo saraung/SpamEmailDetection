@@ -8,7 +8,7 @@ const port = 5000;
 
 const allowedOrigins = [
     "https://spam-email-detection-clientside.vercel.app",
-    "http://localhost:3000" // for local development
+    "http://localhost:5173" // for local development
 ];
 
 app.use(cors({
