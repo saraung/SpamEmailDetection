@@ -1,12 +1,11 @@
-# predict.py
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import joblib
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins
 
-# Paths to the pickle files (ensure these are correct when deploying)
+# Paths to the pickle files
 MODEL_PATH = 'spam_detector_model.pkl'
 VECTORIZER_PATH = 'vectorizer.pkl'
 
