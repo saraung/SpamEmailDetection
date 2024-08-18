@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: spam-email-detection
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 4 -b 0.0.0.0:5000 predict:app
+    port: 5000
+    branch: main

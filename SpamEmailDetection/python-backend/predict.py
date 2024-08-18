@@ -1,3 +1,4 @@
+# predict.py
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import joblib
@@ -14,28 +15,18 @@ model = joblib.load(MODEL_PATH)
 vectorizer = joblib.load(VECTORIZER_PATH)
 
 def predict_spam_or_ham(message):
-    # Transform the message using the vectorizer
     message_vectorized = vectorizer.transform([message])
-
-    # Predict the label
     prediction = model.predict(message_vectorized)
-
-    # Return the predicted label
     return prediction[0]
 
 @app.route('/api/predict', methods=['POST'])
 def predict():
     data = request.get_json()
-
     if 'message' not in data:
         return jsonify({"error": "No message provided"}), 400
 
     message = data['message']
-
-    # Perform prediction
     predicted_label = predict_spam_or_ham(message)
-
-    # Return the prediction
     return jsonify({"prediction": predicted_label})
 
 if __name__ == "__main__":
