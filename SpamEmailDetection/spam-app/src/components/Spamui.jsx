@@ -55,13 +55,13 @@ const Spamui = () => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Enter your message"
-        rows={20} // Controls the vertical size (height)
-        cols={60} // Controls the horizontal size (width)
-        style={{ fontSize: "16px", padding: "10px" }} // Adjusts the font size and padding inside the textarea
+        rows={20}
+        cols={60}
+        style={{ fontSize: "20px", padding: "10px" ,height:"200px",width:"600px"}}
 />
 
         <br />
-        <button type="submit">Predict</button>
+        <button style={{height:"55px",width:"120px"}} type="submit">Predict</button>
       </form>
       {loading?(
         <Box className="spinner-container">
@@ -71,7 +71,7 @@ const Spamui = () => {
       ):(
         
         <div className={resultClassName}>
-        {prediction && <p>Prediction: {prediction}</p>}
+        {prediction && <h2>Prediction: {prediction}</h2>}
         </div>
       )
       }
