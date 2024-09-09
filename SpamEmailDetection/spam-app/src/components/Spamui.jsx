@@ -50,13 +50,16 @@ const Spamui = () => {
         <div className="spamui">
       <h2>Spam Email Detection</h2>
       <form onSubmit={handleSubmit}>
-        <textarea
-            id="inputtextarea"
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Enter your message"
-        />
+      <textarea
+        id="inputtextarea"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Enter your message"
+        rows={20} // Controls the vertical size (height)
+        cols={60} // Controls the horizontal size (width)
+        style={{ fontSize: "16px", padding: "10px" }} // Adjusts the font size and padding inside the textarea
+/>
+
         <br />
         <button type="submit">Predict</button>
       </form>
