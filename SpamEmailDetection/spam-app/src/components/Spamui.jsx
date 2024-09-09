@@ -19,7 +19,6 @@ const Spamui = () => {
 
    
         if (res.status === 200) {
-          console.log(res);
           setPrediction(''); 
           setTimeout(() => {
             setPrediction(res.data.prediction); 
